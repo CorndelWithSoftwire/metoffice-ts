@@ -1,8 +1,23 @@
 import got from 'got'
+import express from 'express'
 
-const key = "YOUR-KEY-HERE"
-const url = `http://datapoint.metoffice.gov.uk/public/data/val/wxfcs/all/json/sitelist?key=${key}`
+async function fetchMetOfficeData() {
 
-const json = await got.get(url).json()
+  const key = "YOUR-KEY-HERE"
+  const url = `http://datapoint.metoffice.gov.uk/public/data/val/wxfcs/all/json/sitelist?key=${key}`
 
-console.log(JSON.stringify(json))
+  const json = await got.get(url).json()
+
+  console.log(JSON.stringify(json))
+
+}
+
+const app = express()
+
+app.set('port', process.env.PORT || 3000)
+
+app.get('/', (_req, res) => {
+  res.status(200).json({ status: 'ok' })
+})
+
+export default app
